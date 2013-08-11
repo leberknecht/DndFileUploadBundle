@@ -67,4 +67,4 @@ in the DndFileUploadExtension should not be necessary
 other bundles as i found it pretty confusing making the webtestcases running without an app..well
 i'm new to this, so that might be normal ^^
 
-https://travis-ci.org/leberknecht/DndFileUploadBundle.png
+[![Build Status](https://travis-ci.org/leberknecht/DndFileUploadBundle.png)](https://travis-ci.org/leberknecht/DndFileUploadBundle)
