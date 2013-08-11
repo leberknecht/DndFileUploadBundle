@@ -69,7 +69,7 @@ function FileUploader(containerDiv) {
 
     function uploadFile() {
         var myUploadWrapper = new UploadThreadWrapper(FileList[currentFileIndex], TargetPostUrl);
-        myUploadWrapper.upload($('#'+constructDivIdPrefix()), FileGroupHash);
+        myUploadWrapper.upload($('#'+constructDivIdPrefix()));
     }
 
     function createProgressDiv(file) {

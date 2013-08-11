@@ -2,17 +2,14 @@ function UploadThreadWrapper(file, targetUrl) {
     var $myProgressBarContainer;
     var xhr = new XMLHttpRequest();
 
-    function upload($progressBarContainer, fileGroupHash) {
+    function upload($progressBarContainer) {
         $myProgressBarContainer = $progressBarContainer;
-        sendFile(fileGroupHash);
+        sendFile();
     }
 
-    function sendFile(fileGroupHash) {
+    function sendFile() {
         var myFormData = new FormData();
         myFormData.append('file', file);
-        if (fileGroupHash) {
-            myFormData.append('fileGroup', fileGroupHash);
-        }
         xhr.upload.addEventListener("progress", uploadProgress, false);
         xhr.onreadystatechange = handleResponse;
         xhr.open("POST", targetUrl);
