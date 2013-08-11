@@ -23,15 +23,7 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('dnd_file_upload');
 
         $rootNode->children()
-            ->arrayNode('twig')
-                ->children()
-                    ->scalarNode('css_class')
-                        ->defaultValue('dnd-file-upload-container')
-                        ->info('the css class that is used for the main-container div element')
-                        ->example('my-sweet-upload-class')
-                    ->end()
-                ->end()
-            ->end()
+
             ->scalarNode('upload_directory')
                 ->defaultValue(Configuration::DEFAULT_UPLOAD_DIRECTORY)
                 ->info('the directory that files are moved to after upload succeeds')
@@ -40,6 +32,18 @@ class Configuration implements ConfigurationInterface
             ->scalarNode('allowed_mimetypes')
                 ->defaultValue('*')
                 ->info('a list of allowed mimetypes, comma-separated, use "*" to allow all')
+            ->end()
+            ->scalarNode('persist_entity')
+                ->defaultValue(false)
+                ->info('if set to true, the file-entity will be persisted after upload')
+            ->end()
+            ->arrayNode('twig')
+                ->children()
+                    ->scalarNode('css_class')
+                        ->defaultValue('dnd-file-upload-container')
+                        ->info('the css class that is used for the main-container div element')
+                    ->end()
+                ->end()
             ->end();
 
         // Here you should define the parameters that are allowed to

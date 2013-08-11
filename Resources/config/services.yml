@@ -1,12 +1,8 @@
 parameters:
-    dnd_file_upload.twig.css_class: 'dnd-file-upload-div'
-    dnd_file_upload.upload_directory: 'web/uploads'
-    dnd_file_upload.allowed_mimetypes: '*'
-
-services:
-#    dnd_file_upload.example:
-#        class: %dnd_file_upload.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    dnd_file_upload.twig.css_class:     'dnd-file-upload-div'
+    dnd_file_upload.upload_directory:   'web/uploads'
+    dnd_file_upload.allowed_mimetypes:  '*'
+    dnd_file_upload.persist_entity:     false
 
 services:
     dnd_file_upload.file_upload_extension:

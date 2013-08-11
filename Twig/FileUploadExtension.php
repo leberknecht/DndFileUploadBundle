@@ -30,6 +30,11 @@ class FileUploadExtension extends Twig_Extension {
     private $supportedMimetypes;
 
     /**
+     * @var
+     */
+    private $persistEntity;
+
+    /**
      * @var string
      */
     private $divContainerCssClass;
@@ -39,6 +44,7 @@ class FileUploadExtension extends Twig_Extension {
         $this->setTwig($twig);
         $this->setSupportedMimetypes($this->dic->getParameter('dnd_file_upload.allowed_mimetypes'));
         $this->setDivContainerCssClass($this->dic->getParameter('dnd_file_upload.twig.css_class'));
+        $this->setPersistEntity($this->dic->getParameter('dnd_file_upload.persist_entity'));
     }
 
     public function getFunctions()
@@ -143,4 +149,21 @@ class FileUploadExtension extends Twig_Extension {
     {
         return $this->supportedMimetypes;
     }
+
+    /**
+     * @param mixed $persistEntity
+     */
+    public function setPersistEntity($persistEntity)
+    {
+        $this->persistEntity = $persistEntity;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPersistEntity()
+    {
+        return $this->persistEntity;
+    }
+
 }

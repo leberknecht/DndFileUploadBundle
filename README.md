@@ -53,7 +53,18 @@ dnd_file_upload:
         {% endjavascripts %}
     {% endblock %}</code></pre>
 
+### doctrine schema update
+Run app/console doctrine:schema:update --force (a table named "dnd_file_uploads" will be created)
+
 Next steps
 ----------
 - make the entity persist optional
 - make the entity class injectable
+- i could need some help with the parameter handling, i think that the setParameter calls
+in the DndFileUploadExtension should not be necessary
+- adding "profiles" array to the configuration so you can have multiple upload configurations
+- i thing my testing environment could be cleaned up a little bit, it consists of snippets from
+other bundles as i found it pretty confusing making the webtestcases running without an app..well
+i'm new to this, so that might be normal ^^
+
+https://travis-ci.org/leberknecht/DndFileUploadBundle.png
