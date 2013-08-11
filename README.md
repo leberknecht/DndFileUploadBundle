@@ -52,3 +52,8 @@ dnd_file_upload:
         <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
     {% endblock %}</code></pre>
+
+Next steps
+----------
+- make the entity persist optional
+- make the entity class injectable
