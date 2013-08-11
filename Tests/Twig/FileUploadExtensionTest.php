@@ -1,8 +1,7 @@
 <?php
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use tps\DndFileUploadBundle\DependencyInjection\DndFileUploadExtension;
-
-use tps\DndFileUploadBundle\DependencyInjection\Configuration as Configuration;
+use tps\DndFileUploadBundle\Tests\AppKernel;
 use tps\DndFileUploadBundle\Twig\FileUploadExtension;
 
 /**
@@ -21,7 +20,11 @@ use tps\DndFileUploadBundle\Twig\FileUploadExtension;
  *
  */
 
-class FileUploadExtensionTest extends \Symfony\Bundle\FrameworkBundle\Test\WebTestCase {
+class FileUploadExtensionTest extends WebTestCase {
+
+    public static function createKernel(array $options = array()) {
+        return new AppKernel('config.default.yml');
+    }
 
     public function testExtensionsUsesContainerId() {
         $client = $this->createClient();

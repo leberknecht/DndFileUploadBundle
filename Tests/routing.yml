@@ -1,0 +1,5 @@
+dnd_file_upload_filepost:
+    pattern:  /fileUpload
+    requirements:
+        method: POST
+    defaults: { _controller: DndFileUploadBundle:Upload:filePost }

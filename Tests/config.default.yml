@@ -1,0 +1,5 @@
+framework:
+    secret: test
+    templating:    { engines: ['twig', 'php'] }
+    router:        { resource: "%kernel.root_dir%/routing.yml" }
+    test: ~
