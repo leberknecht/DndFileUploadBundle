@@ -46,8 +46,11 @@ class UploadControllerTest extends BaseTestCase {
     private function getFile() {
         return array('tmp_name' => 'README.md', 'name' => 'org_name', 'type' => 'wantToFail', 'size' => 2);
     }
+
     public function testUploadErrorOnInvalidMimetype() {
+        file_put_contents('testtmp.txt', 'sweet testing', FILE_APPEND);
         $_FILES['file'] = $this->getFile();
+        $_FILES['file']['tmp_name'] = 'testtmp.txt';
         $this->extension->setSupportedMimetypes('none');
         $this->client->request('POST', $this->router->generate('dnd_file_upload_filepost'), array(), array());
         $this->assertEquals(
@@ -57,6 +60,7 @@ class UploadControllerTest extends BaseTestCase {
             )),
             $this->client->getResponse()->getContent()
         );
+        unlink('testtmp.txt');
     }
 
 }
