@@ -1,0 +1,35 @@
+{
+    "name": "tps/dnd-file-upload-bundle",
+    "type": "symfony-bundle",
+    "description": "The bundle offers a twig filter for creating drag-and-drop file-uploads in your symfony2 app",
+    "keywords": ["upload", "dnd", "drag"],
+    "homepage": "https://github.com/leberknecht/DndFileUploadBundle",
+    "license": "Beer-License",
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "Delf Tonder",
+            "homepage": "https://github.com/leberknecht/DndFileUploadBundle"
+        }
+    ],
+
+    "require": {
+        "php":                      ">=5.3.2",
+        "symfony/framework-bundle": ">=2.0.16,~2.0"
+    },
+
+    "require-dev": {
+        "twig/twig":                ">=1.0,<2.0-dev",
+        "symfony/yaml":             ">=2.0.16,~2.0"
+    },
+
+    "suggest": {
+        "twig/twig":                ">=1.0,<2.0-dev"
+    },
+
+    "autoload": {
+        "psr-0": { "tps\\DndFileUploadBundle": "" }
+    },
+
+    "target-dir": "tsp/DndFileUploadBundle"
+}
