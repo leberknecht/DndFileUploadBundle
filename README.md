@@ -15,29 +15,27 @@ Usage
 <pre><code>//app/Resources/config/config.yml
 dnd_file_upload:
     twig:
-        # the css class that is used for the main-container div element
-        css_class:            dnd-file-upload-container
-
-    # the directory that files are moved to after upload succeeds
-    upload_directory:     web/uploads # Example: /var/userUploads
-
-    # a list of allowed mimetypes, comma-separated, use "*" to allow all
-    allowed_mimetypes:    *</code></pre>
+        css_class:    dnd-file-upload-container  # the css class that is used for the main-container div element
+    upload_directory:    web/uploads             # the directory that files are moved to after upload succeeds
+    allowed_mimetypes:    *                      # a list of allowed mimetypes, comma-separated, use "*" to allow all</code></pre>
+    persist_entity:       false                  # persist the file entity after upload succeeded
 
 ### Controller
+Unfortunately we'll need to pass the css-class name from the controller..if someone knows a more elegant way
+to do this it will be very welcome.
 <pre><code>public function viewAction()
-    {
-        return $this->render(
-            'bundle:controller:view.html.twig',
-            array(
-                'divContainerCssClass' => $this->get('service_container')->getParameter('dnd_file_upload.twig.css_class')
-            )
-        );
-    }</code></pre>
+{
+    return $this->render(
+        'bundle:controller:view.html.twig',
+        array(
+            'divContainerCssClass' => $this->get('service_container')->getParameter('dnd_file_upload.twig.css_class')
+        )
+    );
+}</code></pre>
 
 ### View-Config
 <pre><code>{% block body %}
-{{ DndFileUploadContainer('fileUploadContainer') }}
+    {{ DndFileUploadContainer('fileUploadContainer') }}
 
     {% block javascripts %}
         <script>
@@ -51,7 +49,8 @@ dnd_file_upload:
         %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
-    {% endblock %}</code></pre>
+    {% endblock %}
+{% endblock %}</code></pre>
 
 ### doctrine schema update
 Run app/console doctrine:schema:update --force (a table named "dnd_file_uploads" will be created)
