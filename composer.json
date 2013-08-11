@@ -19,7 +19,6 @@
         "symfony/filesystem":       ">=2.0.16,~2.0",
         "symfony/framework-bundle": ">=2.0.16,~2.0",
         "symfony/http-kernel":      ">=2.0.x-dev",
-        "symfony/routing":          "2.4.*@dev",
         "sensio/framework-extra-bundle": "*",
         "symfony/twig-bundle": "*",
         "symfony/browser-kit":      "*"
