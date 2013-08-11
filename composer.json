@@ -38,5 +38,5 @@
         "psr-0": { "tps\\DndFileUploadBundle": "" }
     },
 
-    "target-dir": "tsp/DndFileUploadBundle"
+    "target-dir": "tps/DndFileUploadBundle"
 }

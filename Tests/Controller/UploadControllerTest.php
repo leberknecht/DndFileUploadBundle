@@ -63,4 +63,18 @@ class UploadControllerTest extends BaseTestCase {
         unlink('testtmp.txt');
     }
 
+    public function testEntityPersistFalse() {
+
+        $doctrineMock = $this->getMock('Doctrine\Bundle\DoctrineBundle\Registry', array('getManager'),array(),'', false);
+        $flushMock = new flushMock();
+        $doctrineMock->expects($this->once())
+            ->method('getManager')
+            ->will($this->returnValue($flushMock));
+
+        $this->client->getContainer()->set('doctrine', $doctrineMock);
+        $_FILES['file'] = $this->getFile();
+        $this->extension->setSupportedMimetypes('text/plain');
+        $this->client->request('POST', $this->router->generate('dnd_file_upload_filepost'), array(), array());
+
+    }
 }
