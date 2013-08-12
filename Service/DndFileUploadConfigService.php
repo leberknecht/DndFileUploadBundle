@@ -1,4 +1,4 @@
-<?
+<?php
 
 namespace tps\DndFileUploadBundle\Service;
 
