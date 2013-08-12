@@ -24,7 +24,6 @@ function UploadThreadWrapper(file, targetUrl) {
                 $('.status_bar_progress',$myProgressBarContainer).css('width', 0);
             } else {
                 finishUpload();
-                $('.status_and_options',$myProgressBarContainer).append('<a href="'+obj.link+'">link</a>');
             }
         }
     }

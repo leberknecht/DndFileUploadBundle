@@ -48,7 +48,7 @@ class File
     /**
      * @var UploadedFile $file
      */
-    public $file;
+    private $file;
 
     /**
      * @var string
@@ -165,17 +165,6 @@ class File
     }
 
     /**
-     * @param array $fileInfo
-     * @return \Symfony\Component\HttpFoundation\File\UploadedFile
-     */
-    public function attachFileByFileinfo(array $fileInfo)
-    {
-        $uploadedFile = new UploadedFile($fileInfo['tmp_name'], $fileInfo['name'], $fileInfo['type'], $fileInfo['size']);
-        $this->file = $uploadedFile;
-        return $uploadedFile;
-    }
-
-    /**
      * @param string $mimetype
      */
     public function setMimetype($mimetype)
@@ -205,5 +194,21 @@ class File
     public function getFilename()
     {
         return $this->filename;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
+     */
+    public function setFile($file)
+    {
+        $this->file = $file;
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\File\UploadedFile
+     */
+    public function getFile()
+    {
+        return $this->file;
     }
 }

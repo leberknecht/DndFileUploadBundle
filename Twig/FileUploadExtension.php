@@ -54,8 +54,18 @@ class FileUploadExtension extends Twig_Extension {
                 array(
                     $this,
                     'DndFileUploadContainerFilter',
-                    ),
-                array("is_safe" => array("html")
+                ),
+                array(
+                    "is_safe" => array("html")
+                )
+            ),
+            new \Twig_SimpleFunction('DndFileUploadAssets',
+                array(
+                    $this,
+                    'DndFileUploadAssetsFilter',
+                ),
+                array(
+                    "is_safe" => array("html")
                 )
             ),
         );
@@ -71,7 +81,22 @@ class FileUploadExtension extends Twig_Extension {
             array(
                 'containerId' => $containerId,
                 'cssClass' => $this->getDivContainerCssClass(),
-                'supportedMimeTypesSerialized' => $this->getSupportedMimetypes()
+                'supportedMimeTypesSerialized' => $this->getSupportedMimetypes(),
+            )
+        );
+    }
+
+    /**
+     * @return string
+     */
+    public function DndFileUploadAssetsFilter()
+    {
+        $uploadSlotTemplate = $this->twig->render('DndFileUploadBundle::uploadSlot.html.twig');
+        return $this->twig->render('DndFileUploadBundle::assets.container.html.twig',
+            array(
+                'cssClass' => $this->getDivContainerCssClass(),
+                'supportedMimeTypesSerialized' => $this->getSupportedMimetypes(),
+                'uploadSlotTemplate' => $uploadSlotTemplate
             )
         );
     }

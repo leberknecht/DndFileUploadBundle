@@ -6,18 +6,7 @@ function FileUploader(containerDiv) {
         currentFileCount = 0,
         SupportedMimeTypes = '',
         $UploadSlotsDiv,
-        $centerTextDiv,
-        uploadSlotTemplate = '<div class="upload_slot" id="%uploadId%">' +
-            '   <div class="upload_label">' +
-            '       sending %filename%' +
-            '   </div>' +
-            '   <div class="status_bar_container">' +
-            '       <div class="status_bar_progress">' +
-            '       </div>' +
-            '   </div>' +
-            '   <div class="status_and_options">' +
-            '   </div>' +
-            '</div>';
+        $centerTextDiv;
 
     function drop(evt) {
         var files = evt.dataTransfer.files;
@@ -31,12 +20,6 @@ function FileUploader(containerDiv) {
         if (files.length > 0) {
             $centerTextDiv.remove();
             handleFiles(files);
-        }
-    }
-
-    function showGroupViewLinkIfHidden() {
-        if (currentFileCount == 1 && !$FileGroupLinkDiv.is(':visible')) {
-            $FileGroupLinkDiv.show('slow');
         }
     }
 
@@ -73,8 +56,9 @@ function FileUploader(containerDiv) {
     }
 
     function createProgressDiv(file) {
-        var template = uploadSlotTemplate.split('%uploadId%').join(constructDivIdPrefix())
-        template = template.split('%filename%').join(file.name)
+        var uploadSlotTemplate = $('.upload-slot-template').html();
+        var template = uploadSlotTemplate.split('%uploadId%').join(constructDivIdPrefix());
+        template = template.split('%filename%').join(file.name);
         return $(template);
     }
 

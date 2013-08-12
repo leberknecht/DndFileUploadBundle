@@ -21,16 +21,15 @@ class UploadController extends Controller {
      */
     public function filePostAction() {
         $file = new File();
+
         $this->setFilePropertiesByUploadedFile($file);
-        $extension = $this->get('dnd_file_upload.file_upload_extension');
-        if (false == $this->checkMimeType($file, $extension)) {
+        $extensionConfig = $this->container->get('dnd_file_upload.config');
+        if (false == $this->checkMimeType($file, $extensionConfig->getSupportedMimetypes())) {
             return $this->unsupportedMimetypeResponse($file);
         }
 
-        $targetPath = $extension->getUploadDirectory();
-        $file->upload($targetPath);
-
-        if ($extension->getPersistEntity()) {
+        $file->upload($this->container->getParameter('dnd_file_upload.upload_directory'));
+        if ($this->container->getParameter('dnd_file_upload.persist_entity')) {
             $this->getDoctrine()->getManager()->flush();
         }
 
@@ -42,11 +41,12 @@ class UploadController extends Controller {
      */
     public function setFilePropertiesByUploadedFile(File $file)
     {
-        $uploadedFile = $file->attachFileByFileinfo($_FILES['file']);
+        $files = $this->getRequest()->files->all();
+        $file->setFile(end($files));
         $file->setCreated(new \DateTime());
-        $file->setName($uploadedFile->getClientOriginalName());
-        $file->setMimetype($uploadedFile->getMimeType());
-        $file->setFilename(rand(0,99999) . time() . '_' . $uploadedFile->getClientOriginalName());
+        $file->setName($file->getFile()->getClientOriginalName());
+        $file->setMimetype($file->getFile()->getMimeType());
+        $file->setFilename(rand(0,99999) . time() . '_' . $file->getFile()->getClientOriginalName());
     }
 
     /**
@@ -65,15 +65,20 @@ class UploadController extends Controller {
 
     /**
      * @param File $file
-     * @param FileUploadExtension $extension
+     * @param string $allowedMimetypesSerialized
      * @return bool
      */
-    private function checkMimeType(File $file, FileUploadExtension $extension)
+    private function checkMimeType(File $file, $allowedMimetypesSerialized)
     {
-        $allowedMimetypes = $extension->getSupportedMimetypes();
-        if ('*' != $allowedMimetypes && !in_array($file->getMimetype(), explode(',', $allowedMimetypes))) {
+        if (
+            '*' != $allowedMimetypesSerialized &&
+            !in_array(
+                $file->getMimetype(),
+                explode(',', $allowedMimetypesSerialized)
+            )
+        ) {
             return false;
         }
         return true;
     }
-} 
+}

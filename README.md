@@ -37,27 +37,15 @@ to do this it will be very welcome.
 <pre><code>{% block body %}
     {{ DndFileUploadContainer('fileUploadContainer') }}
 
-    {% block javascripts %}
-        <script>
-            var dndFileUploadSelector = '.{{ divContainerCssClass }}';
-        </script>
-        {% javascripts
-        '@DndFileUploadBundle/Resources/public/js/jquery-2.0.3.min.js'
-        '@DndFileUploadBundle/Resources/public/js/class.FileUploader.js'
-        '@DndFileUploadBundle/Resources/public/js/class.UploadThreadWrapper.js'
-        '@DndFileUploadBundle/Resources/public/js/bind.js'
-        %}
-        <script type="text/javascript" src="{{ asset_url }}"></script>
-        {% endjavascripts %}
-    {% endblock %}
+    {{ DndFileUploadAssets() }}
 {% endblock %}</code></pre>
 
 ### doctrine schema update
+(only needed if persist_entity is set to true)
 Run app/console doctrine:schema:update --force (a table named "dnd_file_uploads" will be created)
 
 Next steps
 ----------
-- make the entity persist optional
 - make the entity class injectable
 - i could need some help with the parameter handling, i think that the setParameter calls
 in the DndFileUploadExtension should not be necessary

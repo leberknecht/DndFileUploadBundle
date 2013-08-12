@@ -1,6 +1,6 @@
 parameters:
     dnd_file_upload.twig.css_class:     'dnd-file-upload-div'
-    dnd_file_upload.upload_directory:   'web/uploads'
+    dnd_file_upload.upload_directory:   'uploads'
     dnd_file_upload.allowed_mimetypes:  '*'
     dnd_file_upload.persist_entity:     false
 
@@ -10,3 +10,8 @@ services:
         arguments: ['@service_container']
         tags:
             - { name: twig.extension }
+
+    dnd_file_upload.config:
+        class: tps\DndFileUploadBundle\Service\DndFileUploadConfigService
+        arguments: ['@service_container']
+        tags:

@@ -13,7 +13,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 class Configuration implements ConfigurationInterface
 {
 
-    const DEFAULT_UPLOAD_DIRECTORY = 'web/uploads';
+    const DEFAULT_UPLOAD_DIRECTORY = 'uploads';
     /**
      * {@inheritDoc}
      */
@@ -25,25 +25,25 @@ class Configuration implements ConfigurationInterface
         $rootNode->children()
 
             ->scalarNode('upload_directory')
-                ->defaultValue(Configuration::DEFAULT_UPLOAD_DIRECTORY)
-                ->info('the directory that files are moved to after upload succeeds')
-                ->example('/var/userUploads')
+            ->defaultValue(Configuration::DEFAULT_UPLOAD_DIRECTORY)
+            ->info('the directory that files are moved to after upload succeeds')
+            ->example('/var/userUploads')
             ->end()
             ->scalarNode('allowed_mimetypes')
-                ->defaultValue('*')
-                ->info('a list of allowed mimetypes, comma-separated, use "*" to allow all')
+            ->defaultValue('*')
+            ->info('a list of allowed mimetypes, comma-separated, use "*" to allow all')
             ->end()
             ->scalarNode('persist_entity')
-                ->defaultValue(false)
-                ->info('if set to true, the file-entity will be persisted after upload')
+            ->defaultValue(false)
+            ->info('if set to true, the file-entity will be persisted after upload')
             ->end()
             ->arrayNode('twig')
-                ->children()
-                    ->scalarNode('css_class')
-                        ->defaultValue('dnd-file-upload-container')
-                        ->info('the css class that is used for the main-container div element')
-                    ->end()
-                ->end()
+            ->children()
+            ->scalarNode('css_class')
+            ->defaultValue('dnd-file-upload-container')
+            ->info('the css class that is used for the main-container div element')
+            ->end()
+            ->end()
             ->end();
 
         // Here you should define the parameters that are allowed to
