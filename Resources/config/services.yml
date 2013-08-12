@@ -7,6 +7,6 @@ parameters:
 services:
     dnd_file_upload.file_upload_extension:
         class: tps\DndFileUploadBundle\Twig\FileUploadExtension
-        arguments: ['@service_container', '@twig']
+        arguments: ['@service_container']
         tags:
             - { name: twig.extension }

@@ -39,9 +39,9 @@ class FileUploadExtension extends Twig_Extension {
      */
     private $divContainerCssClass;
 
-    public function __construct(Container $dic, \Twig_Environment $twig) {
+    public function __construct(Container $dic) {
         $this->setDic($dic);
-        $this->setTwig($twig);
+        $this->setTwig($this->dic->get('twig'));
         $this->setSupportedMimetypes($this->dic->getParameter('dnd_file_upload.allowed_mimetypes'));
         $this->setDivContainerCssClass($this->dic->getParameter('dnd_file_upload.twig.css_class'));
         $this->setPersistEntity($this->dic->getParameter('dnd_file_upload.persist_entity'));
