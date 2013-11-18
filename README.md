@@ -15,25 +15,111 @@ Usage
 <pre><code>//app/Resources/config/config.yml
 dnd_file_upload:
     twig:
-        css_class:    dnd-file-upload-container  # the css class that is used for the main-container div element
-    upload_directory:    web/uploads             # the directory that files are moved to after upload succeeds
-    allowed_mimetypes:    *                      # a list of allowed mimetypes, comma-separated, use "*" to allow all</code></pre>
-    persist_entity:       false                  # persist the file entity after upload succeeded
+        css_class:        dnd-file-upload-container  # the css class that is used for the main-container div element
+    upload_directory:     web/uploads                # the directory that files are moved to after upload succeeds
+    allowed_mimetypes:    *                          # a list of allowed mimetypes, comma-separated, use "*" to allow all</code></pre>
+    persist_entity:       false                      # set to true will persist default-entity on upload if no post_handler_route is defined
+    post_handler_route:   upload_post_file           # route-identifier for handling file-posts
 
 ### Controller
 Unfortunately we'll need to pass the css-class name from the controller..if someone knows a more elegant way
 to do this it will be very welcome.
-<pre><code>public function viewAction()
-{
-    return $this->render(
-        'bundle:controller:view.html.twig',
-        array(
-            'divContainerCssClass' => $this->get('service_container')->getParameter('dnd_file_upload.twig.css_class')
-        )
-    );
+<pre><code>
+use tps\DndFileUploadBundle\Controller\UploadController as dndUploadController;
+
+class UploadController extends dndUploadController {
+    public function viewAction()
+    {
+        return $this->render(
+            'bundle:controller:view.html.twig',
+            array(
+                'divContainerCssClass' => $this->get('service_container')->getParameter('dnd_file_upload.twig.css_class')
+            )
+        );
+    }
+
+    public function postAction()
+    {
+        $file = new File();
+        $em = $this->getDoctrine()->getManager();
+
+        $this->setFilePropertiesByUploadedFile($file);
+        $extensionConfig = $this->container->get('dnd_file_upload.config');
+        if (false == $this->checkMimeType($file, $extensionConfig->getSupportedMimetypes())) {
+            return $this->unsupportedMimetypeResponse($file);
+        }
+
+        $file->upload($this->container->getParameter('dnd_file_upload.upload_directory'));
+        $em->persist($file);
+        $em->flush();
+
+        return new Response(json_encode(array('error' => 0)));
+    }
+
+    [...]
 }</code></pre>
 
-### View-Config
+### Entity
+<pre><code>use tps\DndFileUploadBundle\Entity\File as dndFile;
+use Doctrine\ORM\Mapping as ORM;
+/**
+ *
+ * @ORM\Table(name="file_uploads")
+ * @ORM\Entity()
+ */
+class File extends dndFile
+{
+    /**
+     * @var integer $id
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var \DateTime $created
+     *
+     * @ORM\Column(name="created", type="datetime")
+     */
+    private $created;
+
+    /**
+     * @var string $directory
+     *
+     * @ORM\Column(name="directory", type="string", length=255)
+     */
+    private $directory;
+
+    /**
+     * @var string $name
+     *
+     * @ORM\Column(name="name", type="string", length=128)
+     */
+    private $name;
+
+    /**
+     * @var UploadedFile $file
+     */
+    private $file;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="mimetype", type="string", length=20)
+     */
+    private $mimetype;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="filename", type="string", length=128)
+     */
+    private $filename;
+}</code></pre>
+
+### View
 <pre><code>{% block body %}
     {{ DndFileUploadContainer('fileUploadContainer') }}
 
@@ -41,12 +127,10 @@ to do this it will be very welcome.
 {% endblock %}</code></pre>
 
 ### doctrine schema update
-(only needed if persist_entity is set to true)
-Run app/console doctrine:schema:update --force (a table named "dnd_file_uploads" will be created)
+Run app/console doctrine:schema:update --force
 
 Next steps
 ----------
-- make the entity class injectable
 - i could need some help with the parameter handling, i think that the setParameter calls
 in the DndFileUploadExtension should not be necessary
 - adding "profiles" array to the configuration so you can have multiple upload configurations

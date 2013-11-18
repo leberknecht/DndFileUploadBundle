@@ -39,12 +39,18 @@ class FileUploadExtension extends Twig_Extension {
      */
     private $divContainerCssClass;
 
+    /**
+     * @var string
+     */
+    private $postHandlerRoute;
+
     public function __construct(Container $dic) {
         $this->setDic($dic);
         $this->setTwig($this->dic->get('twig'));
         $this->setSupportedMimetypes($this->dic->getParameter('dnd_file_upload.allowed_mimetypes'));
         $this->setDivContainerCssClass($this->dic->getParameter('dnd_file_upload.twig.css_class'));
         $this->setPersistEntity($this->dic->getParameter('dnd_file_upload.persist_entity'));
+        $this->setPostHandlerRoute($this->dic->getParameter('dnd_file_upload.post_handler_route'));
     }
 
     public function getFunctions()
@@ -82,6 +88,7 @@ class FileUploadExtension extends Twig_Extension {
                 'containerId' => $containerId,
                 'cssClass' => $this->getDivContainerCssClass(),
                 'supportedMimeTypesSerialized' => $this->getSupportedMimetypes(),
+                'postHandlerRoute' => $this->getPostHandlerRoute(),
             )
         );
     }
@@ -191,4 +198,20 @@ class FileUploadExtension extends Twig_Extension {
         return $this->persistEntity;
     }
 
+
+    /**
+     * @param string $postHandlerRoute
+     */
+    public function setPostHandlerRoute($postHandlerRoute)
+    {
+        $this->postHandlerRoute = $postHandlerRoute;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPostHandlerRoute()
+    {
+        return $this->postHandlerRoute;
+    }
 }

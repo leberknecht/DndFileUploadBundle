@@ -39,7 +39,7 @@ class UploadController extends Controller {
     /**
      * @param File $file
      */
-    public function setFilePropertiesByUploadedFile(File $file)
+    protected function setFilePropertiesByUploadedFile(File $file)
     {
         $files = $this->getRequest()->files->all();
         $file->setFile(end($files));
@@ -53,7 +53,7 @@ class UploadController extends Controller {
      * @param File $file
      * @return Response
      */
-    private function unsupportedMimetypeResponse(File $file)
+    protected function unsupportedMimetypeResponse(File $file)
     {
         return new Response(json_encode(
             array(
@@ -68,7 +68,7 @@ class UploadController extends Controller {
      * @param string $allowedMimetypesSerialized
      * @return bool
      */
-    private function checkMimeType(File $file, $allowedMimetypesSerialized)
+    protected function checkMimeType(File $file, $allowedMimetypesSerialized)
     {
         if (
             '*' != $allowedMimetypesSerialized &&

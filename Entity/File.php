@@ -5,14 +5,7 @@ namespace tps\DndFileUploadBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\Config\Definition\Exception\Exception;
 
-/**
- * MoviePaste\CoreBundle\Entity\File
- *
- * @ORM\Table(name="dnd_file_uploads")
- * @ORM\Entity()
- */
 class File
 {
     /**
@@ -26,22 +19,16 @@ class File
 
     /**
      * @var \DateTime $created
-     *
-     * @ORM\Column(name="created", type="datetime")
      */
     private $created;
 
     /**
      * @var string $directory
-     *
-     * @ORM\Column(name="directory", type="string", length=255)
      */
     private $directory;
 
     /**
      * @var string $name
-     *
-     * @ORM\Column(name="name", type="string", length=128)
      */
     private $name;
 
@@ -52,15 +39,11 @@ class File
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="mimetype", type="string", length=20)
      */
     private $mimetype;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="filename", type="string", length=128)
      */
     private $filename;
 
