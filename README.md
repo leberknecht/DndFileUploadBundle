@@ -61,6 +61,7 @@ class UploadController extends dndUploadController {
 
 ### Entity
 <pre><code>use tps\DndFileUploadBundle\Entity\File as dndFile;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Doctrine\ORM\Mapping as ORM;
 /**
  *

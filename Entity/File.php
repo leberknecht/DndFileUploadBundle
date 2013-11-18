@@ -15,37 +15,37 @@ class File
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var \DateTime $created
      */
-    private $created;
+    protected $created;
 
     /**
      * @var string $directory
      */
-    private $directory;
+    protected $directory;
 
     /**
      * @var string $name
      */
-    private $name;
+    protected $name;
 
     /**
      * @var UploadedFile $file
      */
-    private $file;
+    protected $file;
 
     /**
      * @var string
      */
-    private $mimetype;
+    protected $mimetype;
 
     /**
      * @var string
      */
-    private $filename;
+    protected $filename;
 
     /**
      * Get id
