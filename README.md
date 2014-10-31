@@ -23,7 +23,6 @@ dnd_file_upload:
     upload_directory:     web/uploads
     allowed_mimetypes:    *
     persist_entity:       false
-    post_handler_route is defined
     post_handler_route:   upload_post_file
 ```
 ### Controller
