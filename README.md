@@ -12,19 +12,23 @@ Add the following line to your composer.json:
 Usage
 -----
 ### App-Config
-<pre><code>//app/Resources/config/config.yml
+```yaml
+#app/Resources/config/config.yml
 dnd_file_upload:
     twig:
-        css_class:        dnd-file-upload-container  # the css class that is used for the main-container div element
-    upload_directory:     web/uploads                # the directory that files are moved to after upload succeeds
-    allowed_mimetypes:    *                          # a list of allowed mimetypes, comma-separated, use "*" to allow all</code></pre>
-    persist_entity:       false                      # set to true will persist default-entity on upload if no post_handler_route is defined
-    post_handler_route:   upload_post_file           # route-identifier for handling file-posts
-
+        css_class:        dnd-file-upload-container
+    upload_directory:     web/uploads
+    allowed_mimetypes:    *
+    persist_entity:       false
+    post_handler_route is defined
+    post_handler_route:   upload_post_file
+´´´
 ### Controller
+
 Unfortunately we'll need to pass the css-class name from the controller..if someone knows a more elegant way
 to do this it will be very welcome.
-<pre><code>
+
+```php
 use tps\DndFileUploadBundle\Controller\UploadController as dndUploadController;
 
 class UploadController extends dndUploadController {
@@ -57,10 +61,13 @@ class UploadController extends dndUploadController {
     }
 
     [...]
-}</code></pre>
+}
+´´´
 
 ### Entity
-<pre><code>use tps\DndFileUploadBundle\Entity\File as dndFile;
+
+```php
+use tps\DndFileUploadBundle\Entity\File as dndFile;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Doctrine\ORM\Mapping as ORM;
 /**
@@ -118,14 +125,18 @@ class File extends dndFile
      * @ORM\Column(name="filename", type="string", length=128)
      */
     private $filename;
-}</code></pre>
+}
+´´´
 
 ### View
-<pre><code>{% block body %}
+
+```twig
+{% block body %}
     {{ DndFileUploadContainer('fileUploadContainer') }}
 
     {{ DndFileUploadAssets() }}
 {% endblock %}</code></pre>
+´´´
 
 ### doctrine schema update
 Run app/console doctrine:schema:update --force
