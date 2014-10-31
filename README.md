@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/leberknecht/DndFileUploadBundle.png)](https://travis-ci.org/leberknecht/DndFileUploadBundle)
+[![Coverage Status](https://coveralls.io/repos/leberknecht/DndFileUploadBundle/badge.png?branch=master)](https://coveralls.io/r/leberknecht/tpsPaypalBundle?branch=master)
+
 Drag-And-Drop File-Upload Bundle
 ================================
 
@@ -37,7 +40,8 @@ class UploadController extends dndUploadController {
         return $this->render(
             'bundle:controller:view.html.twig',
             array(
-                'divContainerCssClass' => $this->get('service_container')->getParameter('dnd_file_upload.twig.css_class')
+                'divContainerCssClass' => $this->get('service_container')
+                    ->getParameter('dnd_file_upload.twig.css_class')
             )
         );
     }
@@ -139,7 +143,10 @@ class File extends dndFile
 ```
 
 ### doctrine schema update
-Run app/console doctrine:schema:update --force
+Run 
+```bash
+app/console doctrine:schema:update --force
+````
 
 Next steps
 ----------
@@ -150,4 +157,4 @@ in the DndFileUploadExtension should not be necessary
 other bundles as i found it pretty confusing making the webtestcases running without an app..well
 i'm new to this, so that might be normal ^^
 
-[![Build Status](https://travis-ci.org/leberknecht/DndFileUploadBundle.png)](https://travis-ci.org/leberknecht/DndFileUploadBundle)
+
