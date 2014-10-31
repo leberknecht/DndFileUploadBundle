@@ -13,12 +13,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use tps\DndFileUploadBundle\Tests\BaseTestCase;
 use tps\DndFileUploadBundle\Twig\FileUploadExtension;
 
-class flushMock {
-    function flush() {
-
-    }
-}
-
 class UploadControllerTest extends BaseTestCase {
 
     /**
