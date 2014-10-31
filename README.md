@@ -22,7 +22,7 @@ dnd_file_upload:
     persist_entity:       false
     post_handler_route is defined
     post_handler_route:   upload_post_file
-´´´
+```
 ### Controller
 
 Unfortunately we'll need to pass the css-class name from the controller..if someone knows a more elegant way
@@ -62,7 +62,7 @@ class UploadController extends dndUploadController {
 
     [...]
 }
-´´´
+```
 
 ### Entity
 
@@ -126,7 +126,7 @@ class File extends dndFile
      */
     private $filename;
 }
-´´´
+```
 
 ### View
 
@@ -136,7 +136,7 @@ class File extends dndFile
 
     {{ DndFileUploadAssets() }}
 {% endblock %}</code></pre>
-´´´
+```
 
 ### doctrine schema update
 Run app/console doctrine:schema:update --force
