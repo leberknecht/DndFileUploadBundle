@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/leberknecht/DndFileUploadBundle.png)](https://travis-ci.org/leberknecht/DndFileUploadBundle)
-[![Coverage Status](https://coveralls.io/repos/leberknecht/DndFileUploadBundle/badge.png?branch=master)](https://coveralls.io/r/leberknecht/tpsPaypalBundle?branch=master)
+[![Coverage Status](https://coveralls.io/repos/leberknecht/DndFileUploadBundle/badge.png)](https://coveralls.io/r/leberknecht/DndFileUploadBundle)
 
 Drag-And-Drop File-Upload Bundle
 ================================
