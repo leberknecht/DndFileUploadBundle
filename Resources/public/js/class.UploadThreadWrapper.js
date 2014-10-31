@@ -1,6 +1,6 @@
 function UploadThreadWrapper(file, targetUrl) {
-    var $myProgressBarContainer;
-    var xhr = new XMLHttpRequest();
+    var $myProgressBarContainer,
+        xhr = new XMLHttpRequest();
 
     function upload($progressBarContainer) {
         $myProgressBarContainer = $progressBarContainer;
