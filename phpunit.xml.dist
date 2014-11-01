@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<phpunit bootstrap="./Tests/bootstrap.php" colors="true" forceCoversAnnotation="true">
+<phpunit bootstrap="./Tests/bootstrap.php" colors="true" forceCoversAnnotation="false">
     <testsuites>
         <testsuite name="DndFileUploadBundle test suite">
             <directory suffix="Test.php">./Tests</directory>
