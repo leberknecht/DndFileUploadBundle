@@ -12,6 +12,7 @@
     <filter>
         <blacklist>
             <directory>./vendor</directory>
+            <file>./Tests/AppKernel.php</file>
         </blacklist>
     </filter>
 </phpunit>
