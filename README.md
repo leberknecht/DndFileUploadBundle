@@ -10,7 +10,9 @@ Installation
 ------------
 Add the following line to your composer.json:
 
-<pre><code>require: "tps/dnd-file-upload-bundle": "dev-master"</code></pre>
+```yaml
+require: "tps/dnd-file-upload-bundle": "dev-master"
+```
 
 Usage
 -----
@@ -138,7 +140,7 @@ class File extends dndFile
     {{ DndFileUploadContainer('fileUploadContainer') }}
 
     {{ DndFileUploadAssets() }}
-{% endblock %}</code></pre>
+{% endblock %}
 ```
 
 ### doctrine schema update
