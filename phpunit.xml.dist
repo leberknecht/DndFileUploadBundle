@@ -10,9 +10,12 @@
         <log type="coverage-clover" target="build/logs/clover.xml"/>
     </logging>
     <filter>
-        <blacklist>
-            <directory>./vendor</directory>
-            <file>./Tests/AppKernel.php</file>
-        </blacklist>
+        <whitelist>
+            <directory>./Controller</directory>
+            <directory>./Entity</directory>
+            <directory>./Twig</directory>
+            <directory>./DependencyInjection</directory>
+            <directory>./Service</directory>
+        </whitelist>
     </filter>
 </phpunit>

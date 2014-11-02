@@ -155,12 +155,18 @@ class FileUploadExtension extends Twig_Extension {
     {
         return $this->twig;
     }
-
+    
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'file_upload_extension';
     }
 
+    /**
+     * @return string
+     */
     public function getUploadDirectory()
     {
         return $this->dic->getParameter('dnd_file_upload.upload_directory');
@@ -197,7 +203,6 @@ class FileUploadExtension extends Twig_Extension {
     {
         return $this->persistEntity;
     }
-
 
     /**
      * @param string $postHandlerRoute

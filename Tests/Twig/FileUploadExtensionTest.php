@@ -5,19 +5,10 @@ use tps\DndFileUploadBundle\Tests\BaseTestCase;
 use tps\DndFileUploadBundle\Twig\FileUploadExtension;
 
 /**
- * Created by PhpStorm.
- * User: leberknecht
- * Date: 28.07.13
- * Time: 20:33
- */
-
-/**
  * Class FileUploadExtensionTest
  *
  * dnd_file_upload:
  *     target_directory: web/uploads
- *
- *
  */
 
 class FileUploadExtensionTest extends BaseTestCase {
