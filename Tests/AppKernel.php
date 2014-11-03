@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: leberknecht
- * Date: 11.08.13
- * Time: 20:06
- */
 
 namespace tps\DndFileUploadBundle\Tests;
 use Symfony\Component\Filesystem\Filesystem;

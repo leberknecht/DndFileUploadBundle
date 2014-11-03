@@ -10,21 +10,22 @@ namespace tps\DndFileUploadBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use tps\DndFileUploadBundle\Entity\File;
 use tps\DndFileUploadBundle\Twig\FileUploadExtension;
 
-class UploadController extends Controller {
+class UploadController extends Controller
+{
 
     /**
      * @return Response
      */
-    public function filePostAction() {
-        $file = new File();
-
-        $this->setFilePropertiesByUploadedFile($file);
+    public function filePostAction(Request $request)
+    {
+        $file = $this->getPostedFile($request);
         $extensionConfig = $this->container->get('dnd_file_upload.config');
-        if (false == $this->checkMimeType($file, $extensionConfig->getSupportedMimetypes())) {
+        if (!$extensionConfig->checkMimeType($file)) {
             return $this->unsupportedMimetypeResponse($file);
         }
 
@@ -37,16 +38,27 @@ class UploadController extends Controller {
     }
 
     /**
+     * @param Request $request
+     * @return File
+     */
+    protected function getPostedFile(Request $request)
+    {
+        $file = new File();
+        $postedFiles = $request->files->all();
+        $file->setFile(end($postedFiles));
+        $this->setFilePropertiesByUploadedFile($file);
+        return $file;
+    }
+
+    /**
      * @param File $file
      */
     protected function setFilePropertiesByUploadedFile(File $file)
     {
-        $files = $this->getRequest()->files->all();
-        $file->setFile(end($files));
         $file->setCreated(new \DateTime());
         $file->setName($file->getFile()->getClientOriginalName());
         $file->setMimetype($file->getFile()->getMimeType());
-        $file->setFilename(rand(0,99999) . time() . '_' . $file->getFile()->getClientOriginalName());
+        $file->setFilename(rand(0, 99999) . time() . '_' . $file->getFile()->getClientOriginalName());
     }
 
     /**
@@ -55,30 +67,15 @@ class UploadController extends Controller {
      */
     protected function unsupportedMimetypeResponse(File $file)
     {
-        return new Response(json_encode(
-            array(
-                'error' => 1,
-                'error_message' => 'unsupported filetype: ' . $file->getMimetype()
+        return new Response(
+            json_encode(
+                array(
+                    'error' => 1,
+                    'error_message' => 'unsupported filetype: ' . $file->getMimetype()
+                )
             )
-        ));
+        );
     }
 
-    /**
-     * @param File $file
-     * @param string $allowedMimetypesSerialized
-     * @return bool
-     */
-    protected function checkMimeType(File $file, $allowedMimetypesSerialized)
-    {
-        if (
-            '*' != $allowedMimetypesSerialized &&
-            !in_array(
-                $file->getMimetype(),
-                explode(',', $allowedMimetypesSerialized)
-            )
-        ) {
-            return false;
-        }
-        return true;
-    }
+
 }

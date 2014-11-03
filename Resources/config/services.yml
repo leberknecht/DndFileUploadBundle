@@ -1,17 +1,21 @@
 parameters:
+    dnd_file_upload.allowed_mimetypes:  [ '*' ]
     dnd_file_upload.twig.css_class:     'dnd-file-upload-div'
-    dnd_file_upload.upload_directory:   'uploads'
-    dnd_file_upload.allowed_mimetypes:  '*'
     dnd_file_upload.persist_entity:     false
+    dnd_file_upload.upload_directory:   'uploads'
 
 services:
     dnd_file_upload.file_upload_extension:
         class: tps\DndFileUploadBundle\Twig\FileUploadExtension
-        arguments: ['@service_container']
+        arguments: ['@templating']
+        calls:
+            - [ 'setSupportedMimetypes', [%dnd_file_upload.allowed_mimetypes%] ]
+            - [ 'setDivContainerCssClass', [%dnd_file_upload.twig.css_class%] ]
         tags:
             - { name: twig.extension }
 
     dnd_file_upload.config:
-        class: tps\DndFileUploadBundle\Service\DndFileUploadConfigService
-        arguments: ['@service_container']
+        class: tps\DndFileUploadBundle\Service\DndFileUploadService
+        calls:
+            - [ 'setSupportedMimetypes', [%dnd_file_upload.allowed_mimetypes%] ]
         tags:

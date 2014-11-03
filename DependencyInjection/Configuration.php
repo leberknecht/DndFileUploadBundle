@@ -12,9 +12,8 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 class Configuration implements ConfigurationInterface
 {
-
     const DEFAULT_UPLOAD_DIRECTORY = 'uploads';
-    const DEFAULT_UPLOAD_POST_HANDLER_ROUTE = 'dnd_file_upload_filepost';
+
     /**
      * {@inheritDoc}
      */
@@ -29,14 +28,11 @@ class Configuration implements ConfigurationInterface
             ->info('the directory that files are moved to after upload succeeds')
             ->example('/var/userUploads')
             ->end()
-            ->scalarNode('post_handler_route')
-            ->defaultValue(Configuration::DEFAULT_UPLOAD_POST_HANDLER_ROUTE)
-            ->info('the route that the upload html-form aims at')
-            ->example('mycoolbundle.file_post_action')
-            ->end()
-            ->scalarNode('allowed_mimetypes')
-            ->defaultValue('*')
-            ->info('a list of allowed mimetypes, comma-separated, use "*" to allow all')
+            ->arrayNode('allowed_mimetypes')
+                ->prototype('scalar')
+                ->defaultValue(array('*'))
+                ->end()
+                ->info('an array of allowed mimetypes')
             ->end()
             ->scalarNode('persist_entity')
             ->defaultValue(false)

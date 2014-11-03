@@ -23,53 +23,17 @@ dnd_file_upload:
     twig:
         css_class:        dnd-file-upload-container
     upload_directory:     web/uploads
-    allowed_mimetypes:    *
+    allowed_mimetypes:    [ '*' ]
     persist_entity:       false
-    post_handler_route:   upload_post_file
 ```
 ### Controller
 
 Unfortunately we'll need to pass the css-class name from the controller..if someone knows a more elegant way
 to do this it will be very welcome.
 
-```php
-use tps\DndFileUploadBundle\Controller\UploadController as dndUploadController;
-
-class UploadController extends dndUploadController {
-    public function viewAction()
-    {
-        return $this->render(
-            'bundle:controller:view.html.twig',
-            array(
-                'divContainerCssClass' => $this->get('service_container')
-                    ->getParameter('dnd_file_upload.twig.css_class')
-            )
-        );
-    }
-
-    public function postAction()
-    {
-        $file = new File();
-        $em = $this->getDoctrine()->getManager();
-
-        $this->setFilePropertiesByUploadedFile($file);
-        $extensionConfig = $this->container->get('dnd_file_upload.config');
-        if (false == $this->checkMimeType($file, $extensionConfig->getSupportedMimetypes())) {
-            return $this->unsupportedMimetypeResponse($file);
-        }
-
-        $file->upload($this->container->getParameter('dnd_file_upload.upload_directory'));
-        $em->persist($file);
-        $em->flush();
-
-        return new Response(json_encode(array('error' => 0)));
-    }
-
-    [...]
-}
-```
-
 ### Entity
+
+Add an entity to your bundle:
 
 ```php
 use tps\DndFileUploadBundle\Entity\File as dndFile;

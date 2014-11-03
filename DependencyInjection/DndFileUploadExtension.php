@@ -24,11 +24,9 @@ class DndFileUploadExtension extends Extension
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
-
         $container->setParameter('dnd_file_upload.upload_directory', $config['upload_directory']);
         $container->setParameter('dnd_file_upload.allowed_mimetypes', $config['allowed_mimetypes']);
         $container->setParameter('dnd_file_upload.persist_entity', $config['persist_entity']);
-        $container->setParameter('dnd_file_upload.post_handler_route', $config['post_handler_route']);
         if (isset($config['twig'])) {
             $container->setParameter('dnd_file_upload.twig', $config['twig']);
         }

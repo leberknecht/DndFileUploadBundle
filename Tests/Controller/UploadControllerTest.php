@@ -30,27 +30,60 @@ class UploadControllerTest extends BaseTestCase {
      */
     private $extension;
 
+    /**
+     * @var string
+     */
+    private $target;
+
     public function setUp() {
         $this->client = $this->createClient();
         $this->router = $this->client->getContainer()->get('router');
         $this->client->getContainer()->set('twig', new \Twig_Environment());
         $this->extension = $this->client->getContainer()->get('dnd_file_upload.file_upload_extension');
+        $this->target = sys_get_temp_dir().'/sf.moved.file';
+        @unlink($this->target);
+    }
+
+    public function tearDown()
+    {
+        @unlink($this->target);
     }
 
     public function testUploadErrorOnInvalidMimetype() {
         $source = tempnam(sys_get_temp_dir(), 'source');
         file_put_contents($source, 'hello testing');
-        $target = sys_get_temp_dir().'/sf.moved.file';
-        @unlink($target);
-        $files = new UploadedFile($source, 'original', 'mime/original', 123, UPLOAD_ERR_OK);
+
+        $files = new UploadedFile($source, 'original', 'text/plain', 123, UPLOAD_ERR_OK);
 
         $extensionConfig = $this->client->getContainer()->get('dnd_file_upload.config');
-        $extensionConfig->setSupportedMimetypes('none');
+        $extensionConfig->setSupportedMimetypes(array('none'));
+
         $this->client->request('POST', $this->router->generate('dnd_file_upload_filepost'), array(), array($files));
         $this->assertEquals(
             json_encode(array(
                     'error' => 1,
                     'error_message' => 'unsupported filetype: text/plain'
+                )),
+            $this->client->getResponse()->getContent()
+        );
+    }
+
+    public function testValidFilepost() {
+        $source = tempnam(sys_get_temp_dir(), 'source');
+        file_put_contents($source, 'hello testing');
+        $target = sys_get_temp_dir().'/sf.moved.file';
+        @unlink($target);
+        $files = new UploadedFile($source, 'original', 'text/plain', 123, UPLOAD_ERR_OK);
+
+        $extensionConfig = $this->client->getContainer()->get('dnd_file_upload.config');
+        $extensionConfig->setSupportedMimetypes(array('*'));
+
+        $this->client->request('POST', $this->router->generate('dnd_file_upload_filepost'), array(), array($files));
+        $responseContent = $this->client->getResponse()->getContent();
+        var_dump($responseContent);
+        $this->assertEquals(
+            json_encode(array(
+                    'error' => 0
                 )),
             $this->client->getResponse()->getContent()
         );

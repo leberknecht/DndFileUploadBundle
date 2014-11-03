@@ -8,6 +8,7 @@
 
 namespace tps\DndFileUploadBundle\Twig;
 
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Twig_Extension;
 use Symfony\Component\DependencyInjection\Container;
@@ -15,24 +16,14 @@ use Symfony\Component\DependencyInjection\Container;
 class FileUploadExtension extends Twig_Extension {
 
     /**
-     * @var Container
+     * @var EngineInterface
      */
-    private $dic;
-
-    /**
-     * @var \Twig_Environment
-     */
-    private $twig;
+    private $templatingEngine;
 
     /**
      * @var string
      */
     private $supportedMimetypes;
-
-    /**
-     * @var
-     */
-    private $persistEntity;
 
     /**
      * @var string
@@ -44,13 +35,8 @@ class FileUploadExtension extends Twig_Extension {
      */
     private $postHandlerRoute;
 
-    public function __construct(Container $dic) {
-        $this->setDic($dic);
-        $this->setTwig($this->dic->get('twig'));
-        $this->setSupportedMimetypes($this->dic->getParameter('dnd_file_upload.allowed_mimetypes'));
-        $this->setDivContainerCssClass($this->dic->getParameter('dnd_file_upload.twig.css_class'));
-        $this->setPersistEntity($this->dic->getParameter('dnd_file_upload.persist_entity'));
-        $this->setPostHandlerRoute($this->dic->getParameter('dnd_file_upload.post_handler_route'));
+    public function __construct(EngineInterface $templatingEngine) {
+        $this->setTemplatingEngine($templatingEngine);
     }
 
     public function getFunctions()
@@ -59,7 +45,7 @@ class FileUploadExtension extends Twig_Extension {
             new \Twig_SimpleFunction('DndFileUploadContainer',
                 array(
                     $this,
-                    'DndFileUploadContainerFilter',
+                    'getDndFileUploadContainer',
                 ),
                 array(
                     "is_safe" => array("html")
@@ -81,14 +67,13 @@ class FileUploadExtension extends Twig_Extension {
      * @param $containerId
      * @return string
      */
-    public function DndFileUploadContainerFilter($containerId)
+    public function getDndFileUploadContainer($containerId = '')
     {
-        return $this->twig->render('DndFileUploadBundle::base.container.html.twig',
+        return $this->templatingEngine->render('DndFileUploadBundle::base.container.html.twig',
             array(
                 'containerId' => $containerId,
                 'cssClass' => $this->getDivContainerCssClass(),
-                'supportedMimeTypesSerialized' => $this->getSupportedMimetypes(),
-                'postHandlerRoute' => $this->getPostHandlerRoute(),
+                'supportedMimeTypesSerialized' => $this->getSupportedMimetypes()
             )
         );
     }
@@ -98,30 +83,14 @@ class FileUploadExtension extends Twig_Extension {
      */
     public function DndFileUploadAssetsFilter()
     {
-        $uploadSlotTemplate = $this->twig->render('DndFileUploadBundle::uploadSlot.html.twig');
-        return $this->twig->render('DndFileUploadBundle::assets.container.html.twig',
+        $uploadSlotTemplate = $this->templatingEngine->render('DndFileUploadBundle::uploadSlot.html.twig');
+        return $this->templatingEngine->render('DndFileUploadBundle::assets.container.html.twig',
             array(
                 'cssClass' => $this->getDivContainerCssClass(),
                 'supportedMimeTypesSerialized' => $this->getSupportedMimetypes(),
                 'uploadSlotTemplate' => $uploadSlotTemplate
             )
         );
-    }
-
-    /**
-     * @param \Symfony\Component\DependencyInjection\Container $dic
-     */
-    public function setDic($dic)
-    {
-        $this->dic = $dic;
-    }
-
-    /**
-     * @return \Symfony\Component\DependencyInjection\Container
-     */
-    public function getDic()
-    {
-        return $this->dic;
     }
 
     /**
@@ -141,19 +110,19 @@ class FileUploadExtension extends Twig_Extension {
     }
 
     /**
-     * @param \Twig_Environment $twig
+     * @param EngineInterface $twig
      */
-    public function setTwig($twig)
+    public function setTemplatingEngine($twig)
     {
-        $this->twig = $twig;
+        $this->templatingEngine = $twig;
     }
 
     /**
      * @return \Twig_Environment
      */
-    public function getTwig()
+    public function getTemplatingEngine()
     {
-        return $this->twig;
+        return $this->templatingEngine;
     }
     
     /**
@@ -162,14 +131,6 @@ class FileUploadExtension extends Twig_Extension {
     public function getName()
     {
         return 'file_upload_extension';
-    }
-
-    /**
-     * @return string
-     */
-    public function getUploadDirectory()
-    {
-        return $this->dic->getParameter('dnd_file_upload.upload_directory');
     }
 
     /**
@@ -186,37 +147,5 @@ class FileUploadExtension extends Twig_Extension {
     public function getSupportedMimetypes()
     {
         return $this->supportedMimetypes;
-    }
-
-    /**
-     * @param mixed $persistEntity
-     */
-    public function setPersistEntity($persistEntity)
-    {
-        $this->persistEntity = $persistEntity;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPersistEntity()
-    {
-        return $this->persistEntity;
-    }
-
-    /**
-     * @param string $postHandlerRoute
-     */
-    public function setPostHandlerRoute($postHandlerRoute)
-    {
-        $this->postHandlerRoute = $postHandlerRoute;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPostHandlerRoute()
-    {
-        return $this->postHandlerRoute;
     }
 }
