@@ -54,14 +54,16 @@ class FileTest extends \PHPUnit_Framework_TestCase
 
     public function testUploadFileFileSet()
     {
-        $uploadedFile = $this->getMockBuilder('Symfony\Component\HttpFoundation\File\UploadedFile')
-                            ->disableOriginalConstructor()->getMock();
+        file_put_contents('/tmp/testing','test');
+        $uploadedFile = $this->getMockBuilder('\Symfony\Component\HttpFoundation\File\UploadedFile')
+                            ->setConstructorArgs(array('/tmp/testing', 'testfile.test'))->getMock();
         $this->file->setFilename('testing');
         $uploadedFile->expects($this->once())
             ->method('move')
             ->with('./test','testing');
         $this->file->setFile($uploadedFile);
         $this->file->upload('./test');
+        @unlink('/tmp/testing');
     }
 
     public function testGetMimetype()
@@ -72,9 +74,11 @@ class FileTest extends \PHPUnit_Framework_TestCase
 
     public function testGetFile()
     {
-        $uploadedFile = $this->getMockBuilder('Symfony\Component\HttpFoundation\File\UploadedFile')
-                            ->disableOriginalConstructor()->getMock();
+        file_put_contents('/tmp/testing','test');
+        $uploadedFile = $this->getMockBuilder('\Symfony\Component\HttpFoundation\File\UploadedFile')
+            ->setConstructorArgs(array('/tmp/testing', 'testfile.test'))->getMock();
         $this->file->setFile($uploadedFile);
         $this->assertEquals($uploadedFile, $this->file->getFile());
+        @unlink('/tmp/testing');
     }
 }
