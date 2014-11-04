@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: leberknecht
- * Date: 28.07.13
- * Time: 20:12
- */
 
 namespace tps\DndFileUploadBundle\Twig;
 
@@ -13,15 +7,10 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Twig_Extension;
 use Symfony\Component\DependencyInjection\Container;
 
-class FileUploadExtension extends Twig_Extension {
-
+class FileUploadExtension extends Twig_Extension
+{
     /**
-     * @var EngineInterface
-     */
-    private $templatingEngine;
-
-    /**
-     * @var string
+     * @var array
      */
     private $supportedMimetypes;
 
@@ -31,14 +20,8 @@ class FileUploadExtension extends Twig_Extension {
     private $divContainerCssClass;
 
     /**
-     * @var string
+     * @return array
      */
-    private $postHandlerRoute;
-
-    public function __construct(EngineInterface $templatingEngine) {
-        $this->setTemplatingEngine($templatingEngine);
-    }
-
     public function getFunctions()
     {
         return array(
@@ -48,7 +31,8 @@ class FileUploadExtension extends Twig_Extension {
                     'getDndFileUploadContainer',
                 ),
                 array(
-                    "is_safe" => array("html")
+                    'needs_environment' => true,
+                    'is_safe' => array('html')
                 )
             ),
             new \Twig_SimpleFunction('DndFileUploadAssets',
@@ -57,37 +41,43 @@ class FileUploadExtension extends Twig_Extension {
                     'DndFileUploadAssetsFilter',
                 ),
                 array(
-                    "is_safe" => array("html")
+                    'needs_environment' => true,
+                    'is_safe' => array('html')
                 )
             ),
         );
     }
 
     /**
-     * @param $containerId
+     * @param \Twig_Environment $twig
+     * @param string $containerId
      * @return string
      */
-    public function getDndFileUploadContainer($containerId = '')
+    public function getDndFileUploadContainer(\Twig_Environment $twig, $containerId = '')
     {
-        return $this->templatingEngine->render('DndFileUploadBundle::base.container.html.twig',
+        return $twig->render(
+            'DndFileUploadBundle::base.container.html.twig',
             array(
                 'containerId' => $containerId,
                 'cssClass' => $this->getDivContainerCssClass(),
-                'supportedMimeTypesSerialized' => $this->getSupportedMimetypes()
+                'supportedMimeTypesSerialized' => implode(',', $this->getSupportedMimetypes())
             )
         );
     }
 
     /**
+     * @param \Twig_Environment $twig
      * @return string
      */
-    public function DndFileUploadAssetsFilter()
+    public function DndFileUploadAssetsFilter(\Twig_Environment $twig)
     {
-        $uploadSlotTemplate = $this->templatingEngine->render('DndFileUploadBundle::uploadSlot.html.twig');
-        return $this->templatingEngine->render('DndFileUploadBundle::assets.container.html.twig',
+        $uploadSlotTemplate = $twig->render('DndFileUploadBundle::uploadSlot.html.twig');
+
+        return $twig->render(
+            'DndFileUploadBundle::assets.container.html.twig',
             array(
                 'cssClass' => $this->getDivContainerCssClass(),
-                'supportedMimeTypesSerialized' => $this->getSupportedMimetypes(),
+                'supportedMimeTypesSerialized' => implode(',', $this->getSupportedMimetypes()),
                 'uploadSlotTemplate' => $uploadSlotTemplate
             )
         );
@@ -109,22 +99,7 @@ class FileUploadExtension extends Twig_Extension {
         return $this->divContainerCssClass;
     }
 
-    /**
-     * @param EngineInterface $twig
-     */
-    public function setTemplatingEngine($twig)
-    {
-        $this->templatingEngine = $twig;
-    }
 
-    /**
-     * @return \Twig_Environment
-     */
-    public function getTemplatingEngine()
-    {
-        return $this->templatingEngine;
-    }
-    
     /**
      * @return string
      */
@@ -134,15 +109,15 @@ class FileUploadExtension extends Twig_Extension {
     }
 
     /**
-     * @param string $supportedMimetypes
+     * @param array $supportedMimetypes
      */
-    public function setSupportedMimetypes($supportedMimetypes)
+    public function setSupportedMimetypes(array $supportedMimetypes)
     {
         $this->supportedMimetypes = $supportedMimetypes;
     }
 
     /**
-     * @return string
+     * @return array
      */
     public function getSupportedMimetypes()
     {

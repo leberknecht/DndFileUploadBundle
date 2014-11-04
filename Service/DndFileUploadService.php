@@ -17,7 +17,6 @@ class DndFileUploadService
      */
     public function setSupportedMimetypes(array $supportedMimetypes)
     {
-        echo "set called with: " . var_export($supportedMimetypes, true) . PHP_EOL;
         $this->supportedMimetypes = $supportedMimetypes;
     }
 

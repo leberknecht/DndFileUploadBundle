@@ -17,8 +17,8 @@ use tps\DndFileUploadBundle\Twig\FileUploadExtension;
 
 class UploadController extends Controller
 {
-
     /**
+     * @param Request $request
      * @return Response
      */
     public function filePostAction(Request $request)

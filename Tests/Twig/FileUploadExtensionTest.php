@@ -1,7 +1,13 @@
 <?php
+namespace tps\DndFileUploadBundle\Tests\Twig;
 
+use Symfony\Bundle\FrameworkBundle\Templating\Loader\TemplateLocator;
+use Symfony\Bundle\TwigBundle\Loader\FilesystemLoader;
+use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Symfony\Component\Templating\TemplateNameParser;
 use tps\DndFileUploadBundle\Tests\BaseTestCase;
 use tps\DndFileUploadBundle\Twig\FileUploadExtension;
 
@@ -11,8 +17,8 @@ use tps\DndFileUploadBundle\Twig\FileUploadExtension;
  * dnd_file_upload:
  *     target_directory: web/uploads
  */
-
-class FileUploadExtensionTest extends BaseTestCase {
+class FileUploadExtensionTest extends BaseTestCase
+{
 
     /**
      * @var FileUploadExtension
@@ -28,20 +34,30 @@ class FileUploadExtensionTest extends BaseTestCase {
     {
         $client = $this->createClient();
         $this->containerInterface = $client->getContainer();
-        $this->fileUploadExtension = new FileUploadExtension($this->containerInterface->get('templating'));
-        $sup = $this->fileUploadExtension->getSupportedMimetypes();
-        echo "debug got mimes: " . var_export($sup, true). PHP_EOL;
+        $this->fileUploadExtension = $this->containerInterface->get('dnd_file_upload.file_upload_extension');
     }
-/*
-    public function testDefaultCssClassIsUsed() {
+
+    public function testDefaultCssClassIsUsed()
+    {
         $defaultCssClass = $this->containerInterface->getParameter('dnd_file_upload.twig.css_class');
-        $this->assertContains($defaultCssClass, $this->fileUploadExtension->getDndFileUploadContainer('sweetTesting'));
+        $twig = $this->containerInterface->get('twig');
+
+        $this->assertContains(
+            $defaultCssClass,
+            $this->fileUploadExtension->getDndFileUploadContainer($twig, 'sweetTesting')
+        );
     }
-*/
-    public function testGetDivContainerCssClass() {
+
+    public function testGetDivContainerCssClass()
+    {
         $this->assertNotEmpty($this->fileUploadExtension->getDivContainerCssClass());
         $this->fileUploadExtension->setDivContainerCssClass('sweetTesting');
-        $this->assertEquals('sweetTesting', $this->fileUploadExtension->getDivContainerCssClass());
+        $this->assertEquals(
+            'sweetTesting',
+            $this->fileUploadExtension->getDivContainerCssClass(
+                $this->containerInterface->get('twig')
+            )
+        );
     }
 
     public function testGetFunctions()
@@ -53,7 +69,8 @@ class FileUploadExtensionTest extends BaseTestCase {
                     'getDndFileUploadContainer',
                 ),
                 array(
-                    "is_safe" => array("html")
+                    "is_safe" => array("html"),
+                    'needs_environment' => true,
                 )
             ),
             new \Twig_SimpleFunction('DndFileUploadAssets',
@@ -62,7 +79,8 @@ class FileUploadExtensionTest extends BaseTestCase {
                     'DndFileUploadAssetsFilter',
                 ),
                 array(
-                    "is_safe" => array("html")
+                    "is_safe" => array("html"),
+                    'needs_environment' => true,
                 )
             ),
         );

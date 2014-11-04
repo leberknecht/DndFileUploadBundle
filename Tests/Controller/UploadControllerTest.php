@@ -80,7 +80,6 @@ class UploadControllerTest extends BaseTestCase {
 
         $this->client->request('POST', $this->router->generate('dnd_file_upload_filepost'), array(), array($files));
         $responseContent = $this->client->getResponse()->getContent();
-        var_dump($responseContent);
         $this->assertEquals(
             json_encode(array(
                     'error' => 0
