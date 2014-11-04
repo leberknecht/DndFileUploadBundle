@@ -1,13 +1,7 @@
 <?php
 namespace tps\DndFileUploadBundle\Tests\Twig;
 
-use Symfony\Bundle\FrameworkBundle\Templating\Loader\TemplateLocator;
-use Symfony\Bundle\TwigBundle\Loader\FilesystemLoader;
-use Symfony\Component\Config\FileLocator;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
-use Symfony\Component\Templating\TemplateNameParser;
 use tps\DndFileUploadBundle\Tests\BaseTestCase;
 use tps\DndFileUploadBundle\Twig\FileUploadExtension;
 

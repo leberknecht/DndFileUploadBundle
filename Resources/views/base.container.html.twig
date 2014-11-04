@@ -8,3 +8,22 @@
     </div>
     <div id="{{ containerId }}-upload-slots"></div>
 </div>
+
+<div class="upload-slot-template">{{ uploadSlotTemplate|raw }}</div>
+<script>
+    var dndFileUploadSelector = '.{{ cssClass }}';
+</script>
+{% javascripts
+'@DndFileUploadBundle/Resources/public/js/class.FileUploader.js'
+'@DndFileUploadBundle/Resources/public/js/class.UploadThreadWrapper.js'
+'@DndFileUploadBundle/Resources/public/js/bind.js'
+%}
+<script type="text/javascript" src="{{ asset('bun') }}"></script>
+{% endjavascripts %}
+
+{% stylesheets
+'@DndFileUploadBundle/Resources/public/css/*.css'
+%}
+<link rel="stylesheet" href="{{ asset_url }}" />
+{% endstylesheets %}
+<link href="{{ asset('css/default.css') }}" type="text/css" rel="stylesheet" media="screen" />

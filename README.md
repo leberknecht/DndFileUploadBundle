@@ -36,19 +36,47 @@ dnd_file_upload_routing:
 
 ### View
 
+Create and upload-container:
 ```twig
 {% block body %}
-    {{ DndFileUploadContainer('fileUploadContainer') }}
-
-    {{ DndFileUploadAssets() }}
+    {{ DndFileUploadContainer('file-upload-container') }}
 {% endblock %}
+```
+### Load assets
+#### using assetic:
+```twig
+{% javascripts
+    '@DndFileUploadBundle/Resources/public/js/class.FileUploader.js'
+    '@DndFileUploadBundle/Resources/public/js/class.UploadThreadWrapper.js'
+    '@DndFileUploadBundle/Resources/public/js/bind.js'
+%}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
+```
+
+#### using "normal" assets
+```twig
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('bundles/dndfileupload/js/class.FileUploader.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/dndfileupload/js/class.UploadThreadWrapper.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/dndfileupload/js/bind.js') }}"></script>
+{% endblock
+
+{% block stylesheets %}
+    <link href="{{ asset('bundles/dndfileupload/css/default.css') }}" type="text/css" rel="stylesheet" media="screen" />
+{% endblock %}
+
 ```
 
 ### doctrine schema update
-Run 
+
+This is only necessary if you want the uploaded files to be persisted in the database
+Check the File entity in this bundle.
+
 ```bash
 app/console doctrine:schema:update --force
 ````
 
+### To Do
 
-
+I want to inject the entity class to the controller so you can easily overwrite it with your own
