@@ -1,3 +1,13 @@
 .upload-slot-template {
     display: none;
 }
+.status_bar_container {
+    height: 20px;
+    background-color: #0088CC;
+    border: 1px solid black;
+}
+
+.status_bar_progress {
+    background-color: #5eb5e0;
+    height: 100%;
+}

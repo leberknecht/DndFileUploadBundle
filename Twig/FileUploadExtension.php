@@ -34,17 +34,7 @@ class FileUploadExtension extends Twig_Extension
                     'needs_environment' => true,
                     'is_safe' => array('html')
                 )
-            ),
-            new \Twig_SimpleFunction('DndFileUploadAssets',
-                array(
-                    $this,
-                    'DndFileUploadAssetsFilter',
-                ),
-                array(
-                    'needs_environment' => true,
-                    'is_safe' => array('html')
-                )
-            ),
+            )
         );
     }
 
@@ -61,24 +51,6 @@ class FileUploadExtension extends Twig_Extension
                 'containerId' => $containerId,
                 'cssClass' => $this->getDivContainerCssClass(),
                 'supportedMimeTypesSerialized' => implode(',', $this->getSupportedMimetypes())
-            )
-        );
-    }
-
-    /**
-     * @param \Twig_Environment $twig
-     * @return string
-     */
-    public function DndFileUploadAssetsFilter(\Twig_Environment $twig)
-    {
-        $uploadSlotTemplate = $twig->render('DndFileUploadBundle::uploadSlot.html.twig');
-
-        return $twig->render(
-            'DndFileUploadBundle::assets.container.html.twig',
-            array(
-                'cssClass' => $this->getDivContainerCssClass(),
-                'supportedMimeTypesSerialized' => implode(',', $this->getSupportedMimetypes()),
-                'uploadSlotTemplate' => $uploadSlotTemplate
             )
         );
     }

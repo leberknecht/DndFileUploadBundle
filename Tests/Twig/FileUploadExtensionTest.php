@@ -53,17 +53,6 @@ class FileUploadExtensionTest extends BaseTestCase
         );
     }
 
-    public function testGetFileUploadsAssetFilter()
-    {
-        $this->fileUploadExtension->setDivContainerCssClass('sweetTesting');
-        $this->assertContains(
-            'upload-slot-template',
-            $this->fileUploadExtension->DndFileUploadAssetsFilter(
-                $this->containerInterface->get('twig')
-            )
-        );
-    }
-
     public function testGetFunctions()
     {
         $expected = array(
@@ -76,17 +65,7 @@ class FileUploadExtensionTest extends BaseTestCase
                     "is_safe" => array("html"),
                     'needs_environment' => true,
                 )
-            ),
-            new \Twig_SimpleFunction('DndFileUploadAssets',
-                array(
-                    $this->fileUploadExtension,
-                    'DndFileUploadAssetsFilter',
-                ),
-                array(
-                    "is_safe" => array("html"),
-                    'needs_environment' => true,
-                )
-            ),
+            )
         );
         $this->assertEquals($expected, $this->fileUploadExtension->getFunctions());
     }

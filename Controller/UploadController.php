@@ -31,7 +31,9 @@ class UploadController extends Controller
 
         $file->upload($this->container->getParameter('dnd_file_upload.upload_directory'));
         if ($this->container->getParameter('dnd_file_upload.persist_entity')) {
-            $this->getDoctrine()->getManager()->flush();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($file);
+            $em->flush();
         }
 
         return new Response(json_encode(array('error' => 0)));

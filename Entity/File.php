@@ -6,6 +6,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
+/**
+ * @ORM\Table(name="dnd_file_uploads")
+ * @ORM\Entity()
+ */
 class File
 {
     /**
@@ -18,17 +22,20 @@ class File
     protected $id;
 
     /**
+     * @ORM\Column(name="created", type="datetime")
      * @var \DateTime $created
      */
     protected $created;
 
     /**
      * @var string $directory
+     * @ORM\Column(name="directory", type="string", length=255)
      */
     protected $directory;
 
     /**
      * @var string $name
+     * @ORM\Column(name="name", type="string", length=255)
      */
     protected $name;
 
@@ -39,13 +46,20 @@ class File
 
     /**
      * @var string
+     * @ORM\Column(name="mimetype", type="string", length=255)
      */
     protected $mimetype;
 
     /**
      * @var string
+     * @ORM\Column(name="filename", type="string", length=255)
      */
     protected $filename;
+
+    public function __construct()
+    {
+        $this->created = new \DateTime();
+    }
 
     /**
      * Get id

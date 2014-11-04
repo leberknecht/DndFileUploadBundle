@@ -13,21 +13,30 @@ Add the following line to your composer.json:
 ```yaml
 require: "tps/dnd-file-upload-bundle": "dev-master"
 ```
+Update your dependencies and activate the bundle in the kernel:
+```php
+new \tps\DndFileUploadBundle\DndFileUploadBundle()
+```
 
 Usage
 -----
+### Create upload dir:
+```bash
+mkdir web/uploads && chmod a+w $_
+``` 
+
 ### App-Config
 ```yaml
 #app/Resources/config/config.yml
 dnd_file_upload:
     twig:
         css_class:        dnd-file-upload-container
-    upload_directory:     web/uploads
+    upload_directory:     uploads
     allowed_mimetypes:    [ '*' ]
     persist_entity:       false
 ```
 
-### Routing
+### Enable routing
 ```yaml
 # app/Resources/config/routing.yml
 dnd_file_upload_routing:
@@ -36,14 +45,13 @@ dnd_file_upload_routing:
 
 ### View
 
-Create and upload-container:
+
+If you dont have jQuery, include it before the bundle snippets:
 ```twig
-{% block body %}
-    {{ DndFileUploadContainer('file-upload-container') }}
-{% endblock %}
-```
-### Load assets
-#### using assetic:
+<script src="http://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
+``` 
+
+### Load assets using assetic
 ```twig
 {% javascripts
     '@DndFileUploadBundle/Resources/public/js/class.FileUploader.js'
@@ -57,17 +65,24 @@ Create and upload-container:
 #### using "normal" assets
 ```twig
 {% block javascripts %}
-    {{ parent() }}
+    {{ parent() }}    
     <script type="text/javascript" src="{{ asset('bundles/dndfileupload/js/class.FileUploader.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/dndfileupload/js/class.UploadThreadWrapper.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/dndfileupload/js/bind.js') }}"></script>
-{% endblock
+{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
     <link href="{{ asset('bundles/dndfileupload/css/default.css') }}" type="text/css" rel="stylesheet" media="screen" />
 {% endblock %}
+```
 
+Finally, create the upload-container (the "file-upload-container" parameter is the id of the container in the DOM, 
+use it for styling):
+```twig
+{% block body %}
+    {{ DndFileUploadContainer('file-upload-container') }}
+{% endblock %}
 ```
 
 ### doctrine schema update
@@ -80,5 +95,5 @@ app/console doctrine:schema:update --force
 ````
 
 ### To Do
-
-I want to inject the entity class to the controller so you can easily overwrite it with your own
+- move logic from the entity (pfui!) to the service
+- make entity-class configurable 
