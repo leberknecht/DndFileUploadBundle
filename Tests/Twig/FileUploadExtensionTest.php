@@ -31,11 +31,10 @@ class FileUploadExtensionTest extends BaseTestCase
         $this->fileUploadExtension = $this->containerInterface->get('dnd_file_upload.file_upload_extension');
     }
 
-    public function testDefaultCssClassIsUsed()
+    public function testGetDndFileUploadContainer()
     {
         $defaultCssClass = $this->containerInterface->getParameter('dnd_file_upload.twig.css_class');
         $twig = $this->containerInterface->get('twig');
-
         $this->assertContains(
             $defaultCssClass,
             $this->fileUploadExtension->getDndFileUploadContainer($twig, 'sweetTesting')
@@ -49,6 +48,17 @@ class FileUploadExtensionTest extends BaseTestCase
         $this->assertEquals(
             'sweetTesting',
             $this->fileUploadExtension->getDivContainerCssClass(
+                $this->containerInterface->get('twig')
+            )
+        );
+    }
+
+    public function testGetFileUploadsAssetFilter()
+    {
+        $this->fileUploadExtension->setDivContainerCssClass('sweetTesting');
+        $this->assertContains(
+            'upload-slot-template',
+            $this->fileUploadExtension->DndFileUploadAssetsFilter(
                 $this->containerInterface->get('twig')
             )
         );

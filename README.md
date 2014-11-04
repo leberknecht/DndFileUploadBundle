@@ -57,12 +57,14 @@ Create and upload-container:
 #### using "normal" assets
 ```twig
 {% block javascripts %}
+    {{ parent() }}
     <script type="text/javascript" src="{{ asset('bundles/dndfileupload/js/class.FileUploader.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/dndfileupload/js/class.UploadThreadWrapper.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/dndfileupload/js/bind.js') }}"></script>
 {% endblock
 
 {% block stylesheets %}
+    {{ parent() }}
     <link href="{{ asset('bundles/dndfileupload/css/default.css') }}" type="text/css" rel="stylesheet" media="screen" />
 {% endblock %}
 
