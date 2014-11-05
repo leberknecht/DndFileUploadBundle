@@ -16,6 +16,11 @@ class FileTest extends \PHPUnit_Framework_TestCase
         $this->file = new File();
     }
 
+    public function testSetCreatedOnConstruct()
+    {
+        $this->assertInstanceOf('\DateTime', $this->file->getCreated());
+    }
+
     public function testGetId()
     {
         $this->assertNull($this->file->getId());
