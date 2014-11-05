@@ -2,7 +2,6 @@
 namespace tps\DndFileUploadBundle\Tests\Entity;
 
 use tps\DndFileUploadBundle\Entity\File;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FileTest extends \PHPUnit_Framework_TestCase
 {
