@@ -41,4 +41,12 @@ class DndFileUploadExtensionTest extends \PHPUnit_Framework_TestCase {
         $dndFileUploadExtension->load(array(array()), $containerBuilder);
         $this->assertEquals(Configuration::DEFAULT_UPLOAD_DIRECTORY, $containerBuilder->getParameter('dnd_file_upload.upload_directory'));
     }
+
+    public function testContainerHasTwigCssClassDefinition()
+    {
+        $containerBuilder = new ContainerBuilder();
+        $dndFileUploadExtension = new DndFileUploadExtension();
+        $dndFileUploadExtension->load(array(array('twig' => array('css_class' => 'testing'))), $containerBuilder);
+        $this->assertEquals('testing', $containerBuilder->getParameter('dnd_file_upload.twig.css_class'));
+    }
 } 

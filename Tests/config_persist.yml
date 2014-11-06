@@ -1,0 +1,12 @@
+framework:
+    secret: test
+    templating:    { engines: ['twig', 'php'] }
+    router:        { resource: "%kernel.root_dir%/routing.yml" }
+    test: ~
+
+dnd_file_upload:
+    twig:
+        css_class:        dnd-file-upload-container
+    upload_directory:     web/uploads
+    allowed_mimetypes:    [ '*' ]
+    persist_entity:       true

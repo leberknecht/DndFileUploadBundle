@@ -12,6 +12,9 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class BaseTestCase extends WebTestCase {
     public static function createKernel(array $options = array()) {
+        if (!empty($options['config'])) {
+            return new AppKernel($options['config']);
+        }
         return new AppKernel('config.yml');
     }
 } 

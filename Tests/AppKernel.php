@@ -1,6 +1,7 @@
 <?php
 
 namespace tps\DndFileUploadBundle\Tests;
+use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Symfony\Component\Filesystem\Filesystem;
 use tps\DndFileUploadBundle\DndFileUploadBundle;
 use Symfony\Component\HttpKernel\Kernel;
@@ -31,7 +32,7 @@ class AppKernel extends Kernel {
             new \Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new \Symfony\Bundle\TwigBundle\TwigBundle(),
             new \Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
-
+            new DoctrineBundle(),
             new DndFileUploadBundle(),
         );
     }
