@@ -20,10 +20,6 @@ new \tps\DndFileUploadBundle\DndFileUploadBundle()
 
 Usage
 -----
-### Create upload dir:
-```bash
-mkdir web/uploads && chmod a+w $_
-``` 
 
 ### App-Config
 ```yaml
@@ -36,6 +32,36 @@ dnd_file_upload:
     persist_entity:       true
     entity_class:         Acme\DemoBundle\Entity\MyUploadedFile
 ```
+
+### Entity
+```php
+namespace Acme\DemoBundle\Entity;
+
+use tps\DndFileUploadBundle\Entity\File as UploadedFile;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * @ORM\Table(name="file_uploads") //remove this if you dont want to persist
+ * @ORM\Entity()
+ */
+class MyUploadedFile extends UploadedFile
+{
+     /**
+      * @var integer $id
+      *
+      * @ORM\Column(name="id", type="integer")
+      * @ORM\Id
+      * @ORM\GeneratedValue(strategy="AUTO")
+      */
+     protected $id;
+}
+```
+
+If you want the uploaded files to be persisted, run:
+```bash
+app/console doctrine:schema:update --force
+````
 
 ### Enable routing
 ```yaml
@@ -89,15 +115,6 @@ use it for styling):
     {{ DndFileUploadContainer('file-upload-container') }}
 {% endblock %}
 ```
-
-### doctrine schema update
-
-This is only necessary if you want the uploaded files to be persisted in the database
-Check the File entity in this bundle.
-
-```bash
-app/console doctrine:schema:update --force
-````
 
 ### To Do
 - move logic from the entity (pfui!) to the service
