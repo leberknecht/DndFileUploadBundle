@@ -50,7 +50,8 @@ class FileUploadExtension extends Twig_Extension
             array(
                 'containerId' => $containerId,
                 'cssClass' => $this->getDivContainerCssClass(),
-                'supportedMimeTypesSerialized' => implode(',', $this->getSupportedMimetypes())
+                'supportedMimeTypesSerialized' => implode(',', $this->getSupportedMimetypes()),
+                'uploadSlotTemplate' => $twig->render('DndFileUploadBundle::uploadSlot.html.twig')
             )
         );
     }
