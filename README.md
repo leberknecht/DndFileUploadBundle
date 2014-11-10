@@ -34,6 +34,7 @@ dnd_file_upload:
 ```
 
 ### Entity
+
 ```php
 namespace Acme\DemoBundle\Entity;
 
@@ -118,4 +119,4 @@ use it for styling):
 
 ### To Do
 - move logic from the entity (pfui!) to the service
-- make entity-class configurable 
+- add JS tests
