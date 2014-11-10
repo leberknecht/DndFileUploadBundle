@@ -7,8 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
- * @ORM\Table(name="dnd_file_uploads")
- * @ORM\Entity()
+ * @ORM\MappedSuperclass
  */
 class File
 {

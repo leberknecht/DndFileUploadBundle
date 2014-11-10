@@ -33,7 +33,8 @@ dnd_file_upload:
         css_class:        dnd-file-upload-container
     upload_directory:     uploads
     allowed_mimetypes:    [ '*' ]
-    persist_entity:       false
+    persist_entity:       true
+    entity_class:         Acme\DemoBundle\Entity\MyUploadedFile
 ```
 
 ### Enable routing
@@ -45,13 +46,14 @@ dnd_file_upload_routing:
 
 ### View
 
-
 If you dont have jQuery, include it before the bundle snippets:
 ```twig
 <script src="http://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
 ``` 
 
-### Load assets using assetic
+#### Loading assets
+
+Using assetic:
 ```twig
 {% javascripts
     '@DndFileUploadBundle/Resources/public/js/class.FileUploader.js'
@@ -62,8 +64,9 @@ If you dont have jQuery, include it before the bundle snippets:
 {% endjavascripts %}
 ```
 
-#### using "normal" assets
+Using "normal" assets:
 ```twig
+
 {% block javascripts %}
     {{ parent() }}    
     <script type="text/javascript" src="{{ asset('bundles/dndfileupload/js/class.FileUploader.js') }}"></script>
@@ -76,10 +79,12 @@ If you dont have jQuery, include it before the bundle snippets:
     <link href="{{ asset('bundles/dndfileupload/css/default.css') }}" type="text/css" rel="stylesheet" media="screen" />
 {% endblock %}
 ```
+#### create upload-container
 
 Finally, create the upload-container (the "file-upload-container" parameter is the id of the container in the DOM, 
 use it for styling):
 ```twig
+{# Acme\DemoBundle\Resources\views\index.html.twig #}
 {% block body %}
     {{ DndFileUploadContainer('file-upload-container') }}
 {% endblock %}
