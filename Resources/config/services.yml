@@ -17,4 +17,3 @@ services:
         class: tps\DndFileUploadBundle\Service\DndFileUploadService
         calls:
             - [ 'setSupportedMimetypes', [%dnd_file_upload.allowed_mimetypes%] ]
-        tags:

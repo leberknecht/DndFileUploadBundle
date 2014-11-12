@@ -40,7 +40,6 @@ namespace Acme\DemoBundle\Entity;
 
 use tps\DndFileUploadBundle\Entity\File as UploadedFile;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="file_uploads") //remove this if you dont want to persist
@@ -73,7 +72,7 @@ dnd_file_upload_routing:
 
 ### View
 
-If you dont have jQuery, include it before the bundle snippets:
+If you dont have jQuery included allready, do so before you include bundle snippets:
 ```twig
 <script src="http://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
 ``` 
@@ -118,5 +117,4 @@ use it for styling):
 ```
 
 ### To Do
-- move logic from the entity (pfui!) to the service
 - add JS tests
