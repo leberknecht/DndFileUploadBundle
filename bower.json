@@ -1,0 +1,28 @@
+{
+  "name": "DndFileUploadBundle",
+  "version": "0.2.0",
+  "homepage": "https://github.com/leberknecht/DndFileUploadBundle",
+  "authors": [
+    "delf.tonder <delf.tonder@trademachines.com>"
+  ],
+  "description": "drag and drop file upload for symfony2",
+  "main": "Gruntfile.js",
+  "keywords": [
+    "drag",
+    "drop",
+    "file",
+    "upload",
+    "symfony2"
+  ],
+  "license": "Beer license",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.1"
+  }
+}

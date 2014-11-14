@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Frontend" default="build">
+    <property environment="env"/>
+    <property name="gitTagName" value="build-stable-${env.BUILD_NUMBER}"/>
+    <target name="build" depends="js-testing, phpunit"/>
+
+    <target name="phpunit">
+        <exec dir="${basedir}" executable="vendor/bin/phpunit" />
+    </target>
+
+    <target name="js-testing" depends="npm-install, bower-install, grunt"/>
+
+    <target name="npm-install">
+        <exec dir="${basedir}" executable="npm">
+            <arg line="install"/>
+        </exec>
+    </target>
+    <target name="bower-install">
+        <exec dir="${basedir}" executable="node_modules/bower/bin/bower">
+            <arg line="install"/>
+        </exec>
+    </target>
+    <target name="grunt">
+        <exec dir="${basedir}" executable="node_modules/grunt-cli/bin/grunt"/>
+    </target>
+</project>

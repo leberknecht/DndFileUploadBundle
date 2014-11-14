@@ -1,0 +1,25 @@
+{
+    "name": "dnd-file-upload-bundle",
+    "version": "0.2.0",
+    "description": "Drag and Drop file upload for symfony2",
+    "author": "Delf Tonder <delf.tonder@gmx.de>",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/nfq-extremes/fox-standard.git"
+    },
+    "dependencies": {
+        "bower": "^1.2.8",
+        "grunt": "~0.4.1",
+        "grunt-cli": "~0.1.13",
+        "load-grunt-tasks": "^0.6.0"
+    },
+    "devDependencies": {
+        "intern": "~2.1.1"
+    },
+    "main": "Gruntfile.js",
+    "bugs": {
+        "url": "https://github.com/leberknecht/DndFileUploadBundle/issues"
+    },
+    "homepage": "https://github.com/leberknecht/DndFileUploadBundle",
+    "license": "Beer license"
+}
