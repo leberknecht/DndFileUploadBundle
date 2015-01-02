@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use tps\DndFileUploadBundle\Entity\File;
+use tps\DndFileUploadBundle\Exception\FileEntityClassNotFoundException;
 use tps\DndFileUploadBundle\Twig\FileUploadExtension;
 
 class UploadController extends Controller
@@ -41,11 +42,25 @@ class UploadController extends Controller
 
     /**
      * @param Request $request
+     * @throws FileEntityClassNotFoundException
      * @return File
      */
     protected function getPostedFile(Request $request)
     {
-        $file = new File();
+        if ($this->container->hasParameter('dnd_file_upload.entity_class')) {
+            $fileClass = $this->container->getParameter('dnd_file_upload.entity_class');
+            if (!class_exists($fileClass)) {
+                throw new FileEntityClassNotFoundException('invalid file-entity class specified: ' . $fileClass);
+            }
+
+            $file = new \ReflectionClass(
+                $fileClass
+            );
+            $file = $file->newInstance();
+        } else {
+            $file = new File();
+        }
+
         $postedFiles = $request->files->all();
         $file->setFile(end($postedFiles));
         $this->setFilePropertiesByUploadedFile($file);
@@ -78,6 +93,4 @@ class UploadController extends Controller
             )
         );
     }
-
-
 }

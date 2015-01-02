@@ -27,6 +27,9 @@ class DndFileUploadExtension extends Extension
         $container->setParameter('dnd_file_upload.upload_directory', $config['upload_directory']);
         $container->setParameter('dnd_file_upload.allowed_mimetypes', $config['allowed_mimetypes']);
         $container->setParameter('dnd_file_upload.persist_entity', $config['persist_entity']);
+        if ($config['persist_entity'] == true) {
+            $container->setParameter('dnd_file_upload.entity_class', $config['entity_class']);
+        }
         if (isset($config['twig']) && isset($config['twig']['css_class'])) {
             $container->setParameter('dnd_file_upload.twig.css_class', $config['twig']['css_class']);
         }

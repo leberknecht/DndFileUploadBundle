@@ -50,15 +50,11 @@ class UploadControllerTest extends BaseTestCase {
     }
 
     public function testUploadErrorOnInvalidMimetype() {
-        $source = tempnam(sys_get_temp_dir(), 'source');
-        file_put_contents($source, 'hello testing');
-
-        $files = new UploadedFile($source, 'original', 'text/plain', 123, UPLOAD_ERR_OK);
-
+        $uploadedFile = $this->createUploadedFile();
         $extensionConfig = $this->client->getContainer()->get('dnd_file_upload.config');
         $extensionConfig->setSupportedMimetypes(array('none'));
 
-        $this->client->request('POST', $this->router->generate('dnd_file_upload_filepost'), array(), array($files));
+        $this->client->request('POST', $this->router->generate('dnd_file_upload_filepost'), array(), array($uploadedFile));
         $this->assertEquals(
             json_encode(array(
                     'error' => 1,
@@ -69,15 +65,13 @@ class UploadControllerTest extends BaseTestCase {
     }
 
     public function testValidFilepost() {
-        $source = tempnam(sys_get_temp_dir(), 'source');
-        file_put_contents($source, 'hello testing');
-        $files = new UploadedFile($source, 'original', 'text/plain', 123, UPLOAD_ERR_OK);
+        $uploadedFile = $this->createUploadedFile();
 
         $extensionConfig = $this->client->getContainer()->get('dnd_file_upload.config');
         $extensionConfig->setSupportedMimetypes(array('*'));
 
-        $this->client->request('POST', $this->router->generate('dnd_file_upload_filepost'), array(), array($files));
-        $this->client->getResponse()->getContent();
+        $this->client->request('POST', $this->router->generate('dnd_file_upload_filepost'), array(), array($uploadedFile));
+
         $this->assertEquals(
             json_encode(array(
                     'error' => 0
@@ -102,15 +96,12 @@ class UploadControllerTest extends BaseTestCase {
             ->will($this->returnValue($emMock));
         $this->client->getContainer()->set('doctrine', $registryMock);
 
-        $source = tempnam(sys_get_temp_dir(), 'source');
-        file_put_contents($source, 'hello testing');
-        $files = new UploadedFile($source, 'original', 'text/plain', 123, UPLOAD_ERR_OK);
+        $uploadedFile = $this->createUploadedFile();
 
         $extensionConfig = $this->client->getContainer()->get('dnd_file_upload.config');
-
         $extensionConfig->setSupportedMimetypes(array('*'));
 
-        $this->client->request('POST', $this->router->generate('dnd_file_upload_filepost'), array(), array($files));
+        $this->client->request('POST', $this->router->generate('dnd_file_upload_filepost'), array(), array($uploadedFile));
         $this->client->getResponse()->getContent();
         $this->assertEquals(
             json_encode(array(
@@ -118,5 +109,15 @@ class UploadControllerTest extends BaseTestCase {
                 )),
             $this->client->getResponse()->getContent()
         );
+    }
+
+    /**
+     * @return UploadedFile
+     */
+    private function createUploadedFile()
+    {
+        $source = tempnam(sys_get_temp_dir(), 'source');
+        file_put_contents($source, 'hello testing');
+        return new UploadedFile($source, 'original', 'text/plain', 123, UPLOAD_ERR_OK);
     }
 }

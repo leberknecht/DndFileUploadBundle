@@ -10,3 +10,4 @@ dnd_file_upload:
     upload_directory:     web/uploads
     allowed_mimetypes:    [ '*' ]
     persist_entity:       true
+    entity_class:         tps\DndFileUploadBundle\Entity\File

@@ -7,20 +7,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
- * @ORM\Table(name="dnd_file_uploads")
- * @ORM\Entity()
+ * @ORM\MappedSuperclass
  */
 class File
 {
-    /**
-     * @var integer $id
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
-
     /**
      * @ORM\Column(name="created", type="datetime")
      * @var \DateTime $created

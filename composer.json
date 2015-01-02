@@ -3,7 +3,7 @@
     "type": "symfony-bundle",
     "version": "0.1.0",
     "description": "The bundle offers a twig filter for creating drag-and-drop file-uploads in your symfony2 app",
-    "keywords": ["upload", "dnd", "drag"],
+    "keywords": ["upload", "dnd", "drag", "drop"],
     "homepage": "https://github.com/leberknecht/DndFileUploadBundle",
     "license": "Beer-License",
     "minimum-stability": "dev",
