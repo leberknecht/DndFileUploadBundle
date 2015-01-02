@@ -15,7 +15,10 @@ require: "tps/dnd-file-upload-bundle": "dev-master"
 ```
 Update your dependencies and activate the bundle in the kernel:
 ```php
-new \tps\DndFileUploadBundle\DndFileUploadBundle()
+$bundles = array(
+    [...]
+    new \tps\DndFileUploadBundle\DndFileUploadBundle()
+)
 ```
 
 Usage
