@@ -62,7 +62,7 @@ class MyUploadedFile extends UploadedFile
 }
 ```
 
-If you want the uploaded files to be persisted, run:
+If you want the uploaded files to be persisted in your database, run:
 ```bash
 app/console doctrine:schema:update --force
 ````
